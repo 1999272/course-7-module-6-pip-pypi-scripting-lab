@@ -1,9 +1,15 @@
 import requests
 from datetime import datetime
 
-def generate_log():
-    """Writes a log file with sample entries."""
-    log_data = ["User logged in", "User updated profile", "Report exported"]
+def generate_log(log_data):
+    """
+    Writes a log file with the given log entries.
+    Returns the filename created.
+    """
+    
+    if not isinstance(log_data, list):
+        raise TypeError("log_data must be a list")
+
     filename = f"log_{datetime.now().strftime('%Y%m%d')}.txt"
 
     with open(filename, "w") as file:
@@ -11,7 +17,7 @@ def generate_log():
             file.write(f"{entry}\n")
 
     print(f"Log written to {filename}")
-    return filename  
+    return filename
 
 def fetch_data():
     """Fetches sample data from an API."""
@@ -22,6 +28,7 @@ def fetch_data():
 
 if __name__ == "__main__":
     
-    filename = generate_log()
+    sample_logs = ["User logged in", "User updated profile", "Report exported"]
+    filename = generate_log(sample_logs)
     post = fetch_data()
     print("Fetched Post Title:", post.get("title", "No title found"))
