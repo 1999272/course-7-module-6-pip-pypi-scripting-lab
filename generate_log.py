@@ -1,7 +1,8 @@
 import requests
 from datetime import datetime
 
-def write_log():
+def generate_log():
+    """Writes a log file with sample entries."""
     log_data = ["User logged in", "User updated profile", "Report exported"]
     filename = f"log_{datetime.now().strftime('%Y%m%d')}.txt"
 
@@ -10,14 +11,17 @@ def write_log():
             file.write(f"{entry}\n")
 
     print(f"Log written to {filename}")
+    return filename  
 
 def fetch_data():
+    """Fetches sample data from an API."""
     response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
     if response.status_code == 200:
         return response.json()
     return {}
 
 if __name__ == "__main__":
-    write_log()
+    
+    filename = generate_log()
     post = fetch_data()
     print("Fetched Post Title:", post.get("title", "No title found"))
